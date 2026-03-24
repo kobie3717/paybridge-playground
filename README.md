@@ -1,73 +1,65 @@
-# React + TypeScript + Vite
+# PayBridge Playground 🌉
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> Interactive payment playground — test PayBridge providers live. One API, every payment provider.
 
-Currently, two official plugins are available:
+[![Live Demo](https://img.shields.io/badge/demo-live-success)](https://kobie3717.github.io/paybridge-playground)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Features
 
-## React Compiler
+- **Interactive Payment Forms** — Test payment flows with real-time code preview
+- **Multi-Provider Support** — SoftyComp (live), Yoco, Ozow (coming soon)
+- **Code Examples** — TypeScript, cURL, Python examples with copy-to-clipboard
+- **Webhook Simulator** — Test webhook events in real-time
+- **Test Cards** — Sandbox test cards for each provider
+- **Provider Comparison** — Feature matrix across all supported providers
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tech Stack
 
-## Expanding the ESLint configuration
+- **React 19** + TypeScript
+- **Vite 8** — Lightning-fast build tool
+- **Tailwind CSS 4** — Utility-first styling
+- **Lucide React** — Beautiful icons
+- **Prism React Renderer** — Syntax highlighting
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Development
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+```bash
+# Install dependencies
+npm install
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+# Start dev server
+npm run dev
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Deployment
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+This playground is automatically deployed to GitHub Pages on every push to `main`.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Manual Deployment
+
+```bash
+npm run build
+# Upload the `dist/` directory to your hosting provider
 ```
+
+## Related Projects
+
+- [**PayBridge**](https://github.com/kobie3717/paybridge) — Unified payment SDK for Node.js
+- [**softycomp-node**](https://github.com/kobie3717/softycomp-node) — Official SoftyComp SDK
+- [**WaSP**](https://github.com/kobie3717/wasp) — Unified WhatsApp API
+
+## License
+
+MIT © [Kobus van Schoor](https://github.com/kobie3717)
+
+---
+
+**Built with ❤️ in South Africa 🇿🇦**
+
