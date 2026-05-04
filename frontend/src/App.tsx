@@ -11,6 +11,7 @@ import ProvidersComparison from './components/ProvidersComparison';
 import GetStarted from './components/GetStarted';
 import TestCards from './components/TestCards';
 import HealthStatus from './components/HealthStatus';
+import { DriftStatusPanel } from './components/DriftStatusPanel';
 import type { Provider } from './types';
 
 function App() {
@@ -31,6 +32,11 @@ function App() {
         <Hero />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
+          {/* Drift Detection */}
+          <section id="drift" className="mb-12">
+            <DriftStatusPanel />
+          </section>
+
           {/* Provider Selection */}
           <section id="provider" className="mb-20">
             <ProviderPicker

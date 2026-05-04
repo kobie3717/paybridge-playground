@@ -249,36 +249,55 @@ demoRouter.post('/router-demo', async (req, res) => {
   }
 });
 
-const driftCache: { lastCheckedAt: string; results: any[] } | null = null;
+import { getDriftStatus, type ProviderBuilders } from '../lib/drift-runner.js';
+
+const builders: ProviderBuilders = {
+  stripe: () =>
+    isProviderEnabled('stripe')
+      ? new PayBridge({ provider: 'stripe', credentials: { apiKey: config.stripe.apiKey! }, sandbox: true })
+      : null,
+  paystack: () =>
+    isProviderEnabled('paystack')
+      ? new PayBridge({ provider: 'paystack', credentials: { apiKey: config.paystack.apiKey! }, sandbox: true })
+      : null,
+  payfast: () =>
+    isProviderEnabled('payfast')
+      ? new PayBridge({
+          provider: 'payfast',
+          credentials: {
+            merchantId: config.payfast.merchantId!,
+            merchantKey: config.payfast.merchantKey!,
+            passphrase: config.payfast.passphrase,
+          },
+          sandbox: true,
+        })
+      : null,
+  flutterwave: () =>
+    isProviderEnabled('flutterwave')
+      ? new PayBridge({ provider: 'flutterwave', credentials: { apiKey: config.flutterwave.apiKey! }, sandbox: true })
+      : null,
+  mollie: () =>
+    isProviderEnabled('mollie')
+      ? new PayBridge({ provider: 'mollie', credentials: { apiKey: config.mollie.apiKey! }, sandbox: true })
+      : null,
+};
 
 demoRouter.get('/drift-status', async (_req, res) => {
-  if (driftCache && Date.now() - new Date(driftCache.lastCheckedAt).getTime() < 6 * 60 * 60 * 1000) {
-    return res.json(driftCache);
+  try {
+    const data = await getDriftStatus(builders);
+    res.json(data);
+  } catch (err: any) {
+    res.status(500).json({ error: 'drift_failed', message: err?.message ?? 'unknown' });
   }
+});
 
-  const results = [];
-  const providers: Array<'stripe' | 'paystack' | 'payfast' | 'flutterwave' | 'mollie'> = [
-    'stripe',
-    'paystack',
-    'payfast',
-    'flutterwave',
-    'mollie',
-  ];
-
-  for (const provider of providers) {
-    if (!isProviderEnabled(provider)) {
-      results.push({ provider, skipped: true });
-    } else {
-      results.push({ provider, drift: false });
-    }
+demoRouter.post('/drift-status/refresh', rateLimit(2), async (_req, res) => {
+  try {
+    const data = await getDriftStatus(builders, true);
+    res.json(data);
+  } catch (err: any) {
+    res.status(500).json({ error: 'drift_failed', message: err?.message ?? 'unknown' });
   }
-
-  const response = {
-    lastCheckedAt: new Date().toISOString(),
-    results,
-  };
-
-  res.json(response);
 });
 
 demoRouter.post('/webhook-noop', (_req, res) => {
