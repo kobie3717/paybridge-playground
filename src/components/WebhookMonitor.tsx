@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { Webhook, Code2, Eye, EyeOff, Play, CheckCircle, XCircle, Clock } from 'lucide-react';
-import type { Provider, WebhookEvent } from '../types';
+import { Webhook, Eye, EyeOff, Play, CheckCircle, XCircle, Clock } from 'lucide-react';
+import type { WebhookEvent } from '../types';
 import clsx from 'clsx';
 
 interface WebhookMonitorProps {
-  provider: Provider;
+  provider?: string;
 }
 
 const mockEvents: WebhookEvent[] = [
@@ -49,7 +49,8 @@ const mockEvents: WebhookEvent[] = [
   },
 ];
 
-export default function WebhookMonitor({ provider }: WebhookMonitorProps) {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export default function WebhookMonitor(_props: WebhookMonitorProps) {
   const [events, setEvents] = useState<WebhookEvent[]>(mockEvents);
   const [showRaw, setShowRaw] = useState<string | null>(null);
 

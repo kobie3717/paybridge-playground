@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
+import type { LucideIcon } from 'lucide-react';
 import { ArrowRight, CheckCircle, XCircle, Zap, DollarSign, List, ArrowUpDown } from 'lucide-react';
 import type { RoutingStrategy } from '../types';
 import clsx from 'clsx';
@@ -10,7 +11,7 @@ const providers = [
   { id: 'stripe', name: 'Stripe', fee: 2.9, latency: 180, color: 'indigo' },
 ];
 
-const strategyIcons: Record<RoutingStrategy, any> = {
+const strategyIcons: Record<RoutingStrategy, LucideIcon> = {
   cheapest: DollarSign,
   fastest: Zap,
   priority: List,
@@ -21,6 +22,7 @@ export default function RouterDemo() {
   const [strategy, setStrategy] = useState<RoutingStrategy>('cheapest');
   const [selectedProvider, setSelectedProvider] = useState<string>('softycomp');
   const [showAttempts, setShowAttempts] = useState(false);
+  const rrIndex = useRef(0);
 
   const handleStrategyChange = (newStrategy: RoutingStrategy) => {
     setStrategy(newStrategy);
@@ -34,7 +36,8 @@ export default function RouterDemo() {
     } else if (newStrategy === 'priority') {
       chosen = providers[0].id;
     } else {
-      chosen = providers[Math.floor(Math.random() * providers.length)].id;
+      chosen = providers[rrIndex.current % providers.length].id;
+      rrIndex.current = (rrIndex.current + 1) % providers.length;
     }
     setSelectedProvider(chosen);
 

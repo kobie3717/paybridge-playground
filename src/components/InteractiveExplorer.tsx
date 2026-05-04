@@ -18,7 +18,7 @@ export default function InteractiveExplorer({ provider }: InteractiveExplorerPro
   });
 
   const [isRunning, setIsRunning] = useState(false);
-  const [response, setResponse] = useState<any>(null);
+  const [response, setResponse] = useState<Record<string, unknown> | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [copiedResponse, setCopiedResponse] = useState(false);
 
@@ -54,7 +54,7 @@ export default function InteractiveExplorer({ provider }: InteractiveExplorerPro
       };
 
       setResponse(mockResponse);
-    } catch (err) {
+    } catch {
       setError('Failed to create payment. In production, API calls run server-side to avoid CORS issues.');
     } finally {
       setIsRunning(false);

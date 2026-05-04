@@ -1,4 +1,4 @@
-import { Terminal, BookOpen, ExternalLink as Github, Package } from 'lucide-react';
+import { Terminal, BookOpen, Package } from 'lucide-react';
 
 export default function GetStarted() {
   return (
