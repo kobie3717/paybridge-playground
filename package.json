@@ -1,9 +1,19 @@
 {
-  "name": "paybridge-playground",
-  "private": false,
-  "version": "1.1.0",
-  "type": "module",
-  "description": "Interactive payment playground for PayBridge - Test payment APIs in your browser",
+  "name": "paybridge-playground-root",
+  "version": "0.2.0",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "scripts": {
+    "dev:frontend": "npm -w frontend run dev",
+    "dev:backend": "npm -w backend run dev",
+    "build": "npm -w frontend run build && npm -w backend run build",
+    "start": "npm -w backend run start",
+    "test": "npm -w backend test"
+  },
+  "description": "Live, working demo of PayBridge - unified payment SDK",
   "repository": {
     "type": "git",
     "url": "https://github.com/kobie3717/paybridge-playground"
@@ -11,47 +21,25 @@
   "keywords": [
     "paybridge",
     "payments",
-    "south-africa",
-    "softycomp",
-    "yoco",
-    "ozow",
-    "crypto",
-    "multi-provider",
-    "routing",
-    "idempotency",
-    "playground"
+    "playground",
+    "demo",
+    "south-africa"
   ],
   "author": "Kobie Theron",
   "license": "MIT",
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
-  },
   "dependencies": {
-    "clsx": "^2.1.1",
-    "lucide-react": "^1.6.0",
-    "prism-react-renderer": "^2.4.1",
-    "react": "^19.2.4",
-    "react-dom": "^19.2.4"
-  },
-  "devDependencies": {
-    "@eslint/js": "^9.39.4",
     "@tailwindcss/postcss": "^4.2.4",
-    "@types/node": "^24.12.0",
-    "@types/react": "^19.2.14",
-    "@types/react-dom": "^19.2.3",
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.6.0",
     "@vitejs/plugin-react": "^6.0.1",
-    "autoprefixer": "^10.4.27",
-    "eslint": "^9.39.4",
-    "eslint-plugin-react-hooks": "^7.0.1",
-    "eslint-plugin-react-refresh": "^0.5.2",
-    "globals": "^17.4.0",
-    "postcss": "^8.5.8",
-    "tailwindcss": "^4.2.2",
-    "typescript": "~5.9.3",
-    "typescript-eslint": "^8.57.0",
-    "vite": "^8.0.2"
+    "autoprefixer": "^10.5.0",
+    "eslint": "^10.3.0",
+    "express": "^5.2.1",
+    "paybridge": "^0.12.0",
+    "postcss": "^8.5.13",
+    "tailwindcss": "^4.2.4",
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.3",
+    "vite": "^8.0.10"
   }
 }

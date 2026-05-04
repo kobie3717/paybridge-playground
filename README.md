@@ -1,68 +1,63 @@
-# PayBridge Playground 🌉
+# PayBridge Playground
 
-> Interactive payment playground — test PayBridge 0.3.0 providers live. One API, every payment provider.
+**Live, working demo of [paybridge](https://github.com/kobie3717/paybridge).**
 
-[![Live Demo](https://img.shields.io/badge/demo-live-success)](https://kobie3717.github.io/paybridge-playground)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+Try real payment flows in your browser — no signup, no keys to paste. Click a button, get a real Stripe / PayStack / PayFast / Flutterwave / Mollie checkout URL, complete it with a test card.
 
-## Features
+## Live demo
 
-- **Interactive Payment Forms** — Test payment flows with real-time code preview
-- **8 Fiat + 2 Crypto Providers** — SoftyComp, Yoco, Ozow, PayFast, PayStack, Stripe, Peach, Flutterwave, MoonPay, Yellow Card
-- **Multi-Provider Router** — Visualize routing strategies (cheapest, fastest, priority, round-robin) with automatic failover
-- **Crypto On/Off-Ramp** — Simulate fiat-to-crypto and crypto-to-fiat flows with live quotes
-- **Webhook Idempotency** — Interactive demo showing duplicate detection and prevention
-- **Code Examples** — TypeScript, cURL, Python examples with copy-to-clipboard
-- **Webhook Simulator** — Test webhook events in real-time
-- **Test Cards** — Sandbox test cards for each provider
-- **Provider Comparison** — Feature matrix across all supported providers
+[paybridge-playground.fly.dev](https://paybridge-playground.fly.dev) (coming soon)
 
-## Tech Stack
+## How it works
 
-- **React 19** + TypeScript
-- **Vite 8** — Lightning-fast build tool
-- **Tailwind CSS 4** — Utility-first styling
-- **Lucide React** — Beautiful icons
-- **Prism React Renderer** — Syntax highlighting
+- Frontend: Vite + React + TypeScript SPA
+- Backend: Express + TypeScript, uses paybridge npm package directly
+- Provider creds: stored as env vars on the host. Visitor never pastes keys.
+- Rate limit: 30 demo calls per IP per minute (configurable)
 
-## Development
+## Self-host
+
+Want to run your own playground with your own sandbox keys? It's a 5-minute setup.
 
 ```bash
-# Install dependencies
+git clone https://github.com/kobie3717/paybridge-playground
+cd paybridge-playground
 npm install
-
-# Start dev server
-npm run dev
-
-# Build for production
-npm run build
-
-# Preview production build
-npm run preview
+cp .env.example .env
+# Edit .env with your own sandbox credentials
+npm run dev:backend   # starts Express on :3000
+npm run dev:frontend  # starts Vite on :5173 (proxies /api/* to :3000)
 ```
 
-## Deployment
+## Deploy
 
-This playground is automatically deployed to GitHub Pages on every push to `main`.
-
-### Manual Deployment
+Fly.io:
 
 ```bash
-npm run build
-# Upload the `dist/` directory to your hosting provider
+fly launch --copy-config --no-deploy
+fly secrets set DEMO_STRIPE_API_KEY=sk_test_...
+fly secrets set DEMO_PAYSTACK_API_KEY=sk_test_...
+# ... etc
+fly deploy
 ```
 
-## Related Projects
+## Architecture
 
-- [**PayBridge**](https://github.com/kobie3717/paybridge) — Unified payment SDK for Node.js
-- [**softycomp-node**](https://github.com/kobie3717/softycomp-node) — Official SoftyComp SDK
-- [**WaSP**](https://github.com/kobie3717/wasp) — Unified WhatsApp API
+```
+Visitor (browser)
+       │
+       ▼
+Vite SPA  ───────fetch('/api/demo/...')──────▶  Express backend
+                                                        │
+                                                        ▼
+                                                  paybridge SDK
+                                                        │
+                                                        ▼
+                                              Real provider APIs
+```
+
+The backend is the only place provider creds live.
 
 ## License
 
-MIT © [Kobus van Schoor](https://github.com/kobie3717)
-
----
-
-**Built with ❤️ in South Africa 🇿🇦**
-
+MIT.

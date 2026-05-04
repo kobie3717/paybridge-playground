@@ -1,0 +1,13 @@
+node_modules
+**/node_modules
+**/dist
+**/dist-test
+.env
+.env.*
+.git
+.github
+*.log
+.vscode
+.idea
+README.md
+BUILD_NOTES.md
