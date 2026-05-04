@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Play, Copy, Check, AlertCircle, ExternalLink } from 'lucide-react';
-import { Provider, PaymentFormData } from '../types';
+import type { Provider, PaymentFormData } from '../types';
 import CodePreview from './CodePreview';
 import clsx from 'clsx';
 

@@ -1,7 +1,7 @@
 {
   "name": "paybridge-playground",
   "private": false,
-  "version": "1.0.0",
+  "version": "1.1.0",
   "type": "module",
   "description": "Interactive payment playground for PayBridge - Test payment APIs in your browser",
   "repository": {
@@ -15,6 +15,10 @@
     "softycomp",
     "yoco",
     "ozow",
+    "crypto",
+    "multi-provider",
+    "routing",
+    "idempotency",
     "playground"
   ],
   "author": "Kobie Theron",
@@ -34,6 +38,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.39.4",
+    "@tailwindcss/postcss": "^4.2.4",
     "@types/node": "^24.12.0",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",

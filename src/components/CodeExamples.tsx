@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Code2 } from 'lucide-react';
-import { Provider } from '../types';
+import type { Provider } from '../types';
 import CodePreview from './CodePreview';
 import clsx from 'clsx';
 
@@ -8,8 +8,11 @@ interface CodeExamplesProps {
   provider: Provider;
 }
 
+type ExampleTab = 'basic' | 'router' | 'crypto' | 'idempotency' | 'providers';
+
 export default function CodeExamples({ provider }: CodeExamplesProps) {
   const [language, setLanguage] = useState<'typescript' | 'curl' | 'python'>('typescript');
+  const [activeTab, setActiveTab] = useState<ExampleTab>('basic');
 
   const mockFormData = {
     amount: '100.00',
@@ -17,6 +20,139 @@ export default function CodeExamples({ provider }: CodeExamplesProps) {
     email: 'john@example.com',
     phone: '0821234567',
     reference: 'ORDER-001',
+  };
+
+  const renderExampleContent = () => {
+    if (activeTab === 'router') {
+      return (
+        <div className="p-4 bg-black/40 rounded-lg">
+          <pre className="text-sm text-gray-300 overflow-x-auto">
+            <code>{`import { PayBridge, PayBridgeRouter } from 'paybridge';
+
+const softycomp = new PayBridge({ provider: 'softycomp', credentials: {...}, sandbox: true });
+const payfast = new PayBridge({ provider: 'payfast', credentials: {...}, sandbox: true });
+const yoco = new PayBridge({ provider: 'yoco', credentials: {...}, sandbox: true });
+
+const router = new PayBridgeRouter({
+  providers: [
+    { provider: softycomp, weight: 1 },
+    { provider: payfast, weight: 1 },
+    { provider: yoco, weight: 1 }
+  ],
+  strategy: 'cheapest',
+  fallback: {
+    enabled: true,
+    maxAttempts: 3,
+    retryDelayMs: 250
+  }
+});
+
+const payment = await router.createPayment({
+  amount: 299.00,
+  currency: 'ZAR',
+  reference: 'INV-001',
+  customer: { name: 'John Doe', email: 'john@example.com' },
+  urls: { success: '...', cancel: '...', webhook: '...' }
+});
+
+console.log(payment.routingMeta.chosenProvider);
+console.log(payment.routingMeta.attempts);`}</code>
+          </pre>
+        </div>
+      );
+    }
+
+    if (activeTab === 'crypto') {
+      return (
+        <div className="p-4 bg-black/40 rounded-lg">
+          <pre className="text-sm text-gray-300 overflow-x-auto">
+            <code>{`import { CryptoRamp } from 'paybridge';
+
+const ramp = new CryptoRamp({
+  provider: 'moonpay',
+  credentials: {
+    apiKey: process.env.MOONPAY_API_KEY,
+    secretKey: process.env.MOONPAY_SECRET_KEY
+  },
+  sandbox: true
+});
+
+const onRamp = await ramp.onRamp({
+  fiatAmount: 1000,
+  fiatCurrency: 'ZAR',
+  asset: 'USDT',
+  network: 'Polygon',
+  walletAddress: '0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb',
+  urls: {
+    success: 'https://myapp.com/success',
+    cancel: 'https://myapp.com/cancel'
+  }
+});
+
+console.log(onRamp.checkoutUrl);
+console.log(onRamp.quote);`}</code>
+          </pre>
+        </div>
+      );
+    }
+
+    if (activeTab === 'idempotency') {
+      return (
+        <div className="p-4 bg-black/40 rounded-lg">
+          <pre className="text-sm text-gray-300 overflow-x-auto">
+            <code>{`import { PayBridgeRouter, InMemoryIdempotencyStore, WebhookDuplicateError } from 'paybridge';
+
+const router = new PayBridgeRouter({
+  providers: [...],
+  idempotencyStore: new InMemoryIdempotencyStore({ ttlMs: 86400000 })
+});
+
+app.post('/webhook', async (req, res) => {
+  try {
+    const event = await router.parseWebhook(req.body, req.headers, 'softycomp');
+
+    switch (event.type) {
+      case 'payment.completed':
+        await processPayment(event.payment);
+        break;
+    }
+
+    res.sendStatus(200);
+  } catch (error) {
+    if (error instanceof WebhookDuplicateError) {
+      console.log('Duplicate webhook ignored:', error.eventId);
+      return res.sendStatus(200);
+    }
+    throw error;
+  }
+});`}</code>
+          </pre>
+        </div>
+      );
+    }
+
+    if (activeTab === 'providers') {
+      return (
+        <div className="space-y-4">
+          {['stripe', 'payfast', 'paystack', 'peach', 'flutterwave'].map((prov) => (
+            <div key={prov} className="p-4 bg-black/40 rounded-lg">
+              <div className="text-xs text-brand-400 font-mono mb-2 capitalize">{prov}</div>
+              <pre className="text-sm text-gray-300 overflow-x-auto">
+                <code>{`const pay = new PayBridge({
+  provider: '${prov}',
+  credentials: {
+    apiKey: process.env.${prov.toUpperCase()}_API_KEY${prov === 'stripe' ? '' : ','}${prov !== 'stripe' ? `\n    secretKey: process.env.${prov.toUpperCase()}_SECRET_KEY` : ''}
+  },
+  sandbox: true
+});`}</code>
+              </pre>
+            </div>
+          ))}
+        </div>
+      );
+    }
+
+    return <CodePreview formData={mockFormData} provider={provider} language={language} />;
   };
 
   return (
@@ -36,24 +172,49 @@ export default function CodeExamples({ provider }: CodeExamplesProps) {
           <h3 className="text-xl font-semibold text-white">Full Integration Example</h3>
         </div>
 
-        <div className="flex items-center gap-2 mb-6">
-          {(['typescript', 'curl', 'python'] as const).map((lang) => (
+        <div className="flex flex-wrap items-center gap-2 mb-6">
+          {(['basic', 'router', 'crypto', 'idempotency', 'providers'] as ExampleTab[]).map((tab) => (
             <button
-              key={lang}
-              onClick={() => setLanguage(lang)}
+              key={tab}
+              onClick={() => setActiveTab(tab)}
               className={clsx(
                 'px-4 py-2 rounded-lg text-sm font-medium transition-all',
-                language === lang
+                activeTab === tab
                   ? 'bg-brand-500 text-white'
                   : 'bg-white/5 text-gray-400 hover:bg-white/10 hover:text-gray-300'
               )}
             >
-              {lang === 'typescript' && 'TypeScript'}
-              {lang === 'curl' && 'cURL'}
-              {lang === 'python' && 'Python'}
+              {tab === 'basic' && 'Basic Payment'}
+              {tab === 'router' && 'Router'}
+              {tab === 'crypto' && 'Crypto Ramp'}
+              {tab === 'idempotency' && 'Idempotency'}
+              {tab === 'providers' && 'All Providers'}
             </button>
           ))}
         </div>
+
+        {activeTab === 'basic' && (
+          <div className="flex items-center gap-2 mb-6">
+            {(['typescript', 'curl', 'python'] as const).map((lang) => (
+              <button
+                key={lang}
+                onClick={() => setLanguage(lang)}
+                className={clsx(
+                  'px-4 py-2 rounded-lg text-sm font-medium transition-all',
+                  language === lang
+                    ? 'bg-purple-500 text-white'
+                    : 'bg-white/5 text-gray-400 hover:bg-white/10 hover:text-gray-300'
+                )}
+              >
+                {lang === 'typescript' && 'TypeScript'}
+                {lang === 'curl' && 'cURL'}
+                {lang === 'python' && 'Python'}
+              </button>
+            ))}
+          </div>
+        )}
+
+        {renderExampleContent()}
 
         <CodePreview
           formData={mockFormData}

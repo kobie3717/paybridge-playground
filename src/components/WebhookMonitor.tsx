@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Webhook, Code2, Eye, EyeOff, Play, CheckCircle, XCircle, Clock } from 'lucide-react';
-import { Provider, WebhookEvent } from '../types';
+import type { Provider, WebhookEvent } from '../types';
 import clsx from 'clsx';
 
 interface WebhookMonitorProps {

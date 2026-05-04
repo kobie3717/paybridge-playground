@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Copy, Check } from 'lucide-react';
-import { Provider, PaymentFormData } from '../types';
+import type { Provider, PaymentFormData } from '../types';
 import { Highlight, themes } from 'prism-react-renderer';
 import clsx from 'clsx';
 

@@ -2,12 +2,15 @@ import { useState } from 'react';
 import Hero from './components/Hero';
 import ProviderPicker from './components/ProviderPicker';
 import InteractiveExplorer from './components/InteractiveExplorer';
+import RouterDemo from './components/RouterDemo';
+import CryptoRampDemo from './components/CryptoRampDemo';
+import IdempotencySection from './components/IdempotencySection';
 import WebhookMonitor from './components/WebhookMonitor';
 import CodeExamples from './components/CodeExamples';
 import ProvidersComparison from './components/ProvidersComparison';
 import GetStarted from './components/GetStarted';
 import TestCards from './components/TestCards';
-import { Provider } from './types';
+import type { Provider } from './types';
 
 function App() {
   const [selectedProvider, setSelectedProvider] = useState<Provider>('softycomp');
@@ -42,6 +45,21 @@ function App() {
               Test payment flows in real-time. Fill in the form, see the code, and run it against the sandbox.
             </p>
             <InteractiveExplorer provider={selectedProvider} />
+          </section>
+
+          {/* Router Demo */}
+          <section id="router" className="mb-20">
+            <RouterDemo />
+          </section>
+
+          {/* Crypto Ramp Demo */}
+          <section id="crypto" className="mb-20">
+            <CryptoRampDemo />
+          </section>
+
+          {/* Idempotency Section */}
+          <section id="idempotency" className="mb-20">
+            <IdempotencySection />
           </section>
 
           {/* Test Cards */}

@@ -1,6 +1,6 @@
 # PayBridge Playground 🌉
 
-> Interactive payment playground — test PayBridge providers live. One API, every payment provider.
+> Interactive payment playground — test PayBridge 0.3.0 providers live. One API, every payment provider.
 
 [![Live Demo](https://img.shields.io/badge/demo-live-success)](https://kobie3717.github.io/paybridge-playground)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
@@ -8,7 +8,10 @@
 ## Features
 
 - **Interactive Payment Forms** — Test payment flows with real-time code preview
-- **Multi-Provider Support** — SoftyComp (live), Yoco, Ozow (coming soon)
+- **8 Fiat + 2 Crypto Providers** — SoftyComp, Yoco, Ozow, PayFast, PayStack, Stripe, Peach, Flutterwave, MoonPay, Yellow Card
+- **Multi-Provider Router** — Visualize routing strategies (cheapest, fastest, priority, round-robin) with automatic failover
+- **Crypto On/Off-Ramp** — Simulate fiat-to-crypto and crypto-to-fiat flows with live quotes
+- **Webhook Idempotency** — Interactive demo showing duplicate detection and prevention
 - **Code Examples** — TypeScript, cURL, Python examples with copy-to-clipboard
 - **Webhook Simulator** — Test webhook events in real-time
 - **Test Cards** — Sandbox test cards for each provider

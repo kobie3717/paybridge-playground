@@ -1,4 +1,4 @@
-import { Terminal, BookOpen, Github, Package } from 'lucide-react';
+import { Terminal, BookOpen, ExternalLink as Github, Package } from 'lucide-react';
 
 export default function GetStarted() {
   return (
@@ -66,7 +66,7 @@ const payment = await pb
         <div className="glass rounded-xl p-6">
           <div className="flex items-center gap-3 mb-4">
             <div className="w-10 h-10 bg-gray-500/20 rounded-lg flex items-center justify-center">
-              <Github className="w-5 h-5 text-gray-400" />
+              <ExternalLink as Github className="w-5 h-5 text-gray-400" />
             </div>
             <h3 className="text-xl font-semibold text-white">Open Source</h3>
           </div>
@@ -81,7 +81,7 @@ const payment = await pb
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-4 py-2 bg-white/5 hover:bg-white/10 text-white rounded-lg transition-all hover-lift"
           >
-            <Github className="w-4 h-4" />
+            <ExternalLink as Github className="w-4 h-4" />
             View Repository
           </a>
         </div>

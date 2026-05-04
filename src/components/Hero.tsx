@@ -1,4 +1,4 @@
-import { ArrowRight, Github } from 'lucide-react';
+import { ArrowRight, ExternalLink } from 'lucide-react';
 
 export default function Hero() {
   return (
@@ -19,7 +19,7 @@ export default function Hero() {
           </p>
 
           <p className="text-lg text-gray-400 mb-12 max-w-2xl mx-auto">
-            Interactive playground for testing South African payment providers.
+            Interactive playground for 8 fiat + 2 crypto providers with multi-provider routing.
             Try real API calls in your browser with live code preview.
           </p>
 
@@ -38,7 +38,7 @@ export default function Hero() {
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-8 py-4 glass hover:bg-white/10 text-white rounded-lg font-semibold transition-all hover-lift"
             >
-              <Github className="w-5 h-5" />
+              <ExternalLink className="w-5 h-5" />
               View on GitHub
             </a>
           </div>
@@ -46,10 +46,17 @@ export default function Hero() {
           {/* Provider Logos */}
           <div className="mt-16 pt-8 border-t border-white/10">
             <p className="text-sm text-gray-500 mb-6">SUPPORTED PROVIDERS</p>
-            <div className="flex flex-wrap items-center justify-center gap-8 sm:gap-12">
-              <div className="text-gray-400 font-semibold text-lg">SoftyComp</div>
-              <div className="text-gray-600 font-semibold text-lg">Yoco</div>
-              <div className="text-gray-600 font-semibold text-lg">Ozow</div>
+            <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-8">
+              <div className="text-gray-400 font-semibold text-base">SoftyComp</div>
+              <div className="text-gray-400 font-semibold text-base">Yoco</div>
+              <div className="text-gray-400 font-semibold text-base">Ozow</div>
+              <div className="text-gray-400 font-semibold text-base">PayFast</div>
+              <div className="text-gray-400 font-semibold text-base">PayStack</div>
+              <div className="text-gray-400 font-semibold text-base">Stripe</div>
+              <div className="text-gray-400 font-semibold text-base">Peach</div>
+              <div className="text-gray-400 font-semibold text-base">Flutterwave</div>
+              <div className="text-gray-500 font-semibold text-base">MoonPay</div>
+              <div className="text-gray-500 font-semibold text-base">YellowCard</div>
             </div>
           </div>
         </div>

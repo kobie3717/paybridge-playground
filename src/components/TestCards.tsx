@@ -1,5 +1,5 @@
 import { CreditCard } from 'lucide-react';
-import { Provider, TestCard } from '../types';
+import type { Provider, TestCard } from '../types';
 
 interface TestCardsProps {
   provider: Provider;

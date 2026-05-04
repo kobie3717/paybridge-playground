@@ -1,4 +1,29 @@
-export type Provider = 'softycomp' | 'yoco' | 'ozow';
+export type Provider =
+  | 'softycomp'
+  | 'yoco'
+  | 'ozow'
+  | 'payfast'
+  | 'paystack'
+  | 'stripe'
+  | 'peach'
+  | 'flutterwave';
+
+export type CryptoProvider = 'moonpay' | 'yellowcard';
+
+export type RoutingStrategy = 'cheapest' | 'fastest' | 'priority' | 'round-robin';
+
+export interface ProviderCapability {
+  id: Provider;
+  name: string;
+  region: string;
+  feePercent: number;
+  feeFixed: number;
+  feeCurrency: string;
+  avgLatencyMs: number;
+  supportsSubscriptions: boolean;
+  supportsRefunds: boolean;
+  status: 'production' | 'experimental';
+}
 
 export interface PaymentFormData {
   amount: string;
