@@ -23,6 +23,6 @@ app.get('*', (_req, res) => {
   res.sendFile(path.join(frontendDist, 'index.html'));
 });
 
-app.listen(config.port, () => {
-  console.log(`paybridge-playground listening on :${config.port}`);
+app.listen(config.port, '127.0.0.1', () => {
+  console.log(`paybridge-playground listening on 127.0.0.1:${config.port}`);
 });
